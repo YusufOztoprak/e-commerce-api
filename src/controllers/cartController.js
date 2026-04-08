@@ -31,7 +31,9 @@ const addToCart = async (req, res, next) => {
 
         console.log('product_id:', product_id);
 
-        const product = await Product.findByPk(product_id, { transaction: t });
+        const product = await Product.findByPk(product_id, {
+            lock: t.LOCK.UPDATE,
+            transaction: t });
         console.log('product:', product);
         if (!product) {
             await t.rollback();
