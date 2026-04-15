@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const authenticate = require('../middleware/authenticate');
 const authorize = require('../middleware/authorize');
+const validate = require('../middleware/validate');
+const { createProductSchema, updateProductSchema } = require('../validators/productValidator');
 const {
     getAllProducts,
     getProductById,
@@ -10,19 +12,10 @@ const {
     deleteProduct,
 } = require('../controllers/productController');
 
-// Public route to get all products
 router.get('/', getAllProducts);
-
-// Public route to get a product by ID
 router.get('/:id', getProductById);
-
-// Protected route to create a new product (admin only)
-router.post('/', authenticate, authorize('admin'), createProduct);
-
-// Protected route to update a product (admin only)
-router.put('/:id', authenticate, authorize('admin'), updateProduct);
-
-// Protected route to delete a product (admin only)
+router.post('/', authenticate, authorize('admin'), validate(createProductSchema), createProduct);
+router.put('/:id', authenticate, authorize('admin'), validate(updateProductSchema), updateProduct);
 router.delete('/:id', authenticate, authorize('admin'), deleteProduct);
 
 module.exports = router;
