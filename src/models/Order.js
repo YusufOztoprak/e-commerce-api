@@ -20,6 +20,11 @@ const Order = sequelize.define('Order', {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
     },
+}, {
+    indexes: [
+        { fields: ['user_id'] },
+        { fields: ['status'] },
+    ]
 });
 
 module.exports = Order;

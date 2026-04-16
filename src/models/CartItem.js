@@ -19,12 +19,17 @@ const CartItem = sequelize.define('CartItem', {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 1,
-        validate: { min: 1 },
+        validate: {min: 1},
     },
     price: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
     },
+}, {
+    indexes: [
+        { fields: ['cart_id'] },
+        { fields: ['product_id'] },
+        ]
 });
 
 module.exports = CartItem;

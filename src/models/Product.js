@@ -18,21 +18,26 @@ const Product = sequelize.define('Product', {
   price: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
-      validate: { min: 0 },
+    validate: { min: 0 },
   },
   stock: {
     type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: 0,
     validate: { min: 0 },
-  }, image_url: {
+  },
+  image_url: {
     type: DataTypes.STRING,
     allowNull: true,
   },
-    category_id: {
+  category_id: {
     type: DataTypes.UUID,
-        allowNull: false,
-    },
-  });
+    allowNull: false,
+  },
+}, {
+  indexes: [
+    { fields: ['category_id'] },
+  ]
+});
 
 module.exports = Product;
